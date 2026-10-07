@@ -1,0 +1,77 @@
+﻿#include <stdio.h>
+#define SIZE 5
+
+struct Element {
+    int data;
+    int priority;
+};
+
+struct Element pq[SIZE];
+int size = 0;
+
+void insert(int data, int priority) {
+    if (size == SIZE) {
+        printf("Priority Queue Overflow\n");
+        return;
+    }
+    pq[size].data = data;
+    pq[size].priority = priority;
+    size++;
+    printf("Inserted %d with Priority %d\n", data, priority);
+}
+
+int getHighestPriorityIndex() {
+    int highestPriority = -1;
+    int index = -1;
+    for (int i = 0; i < size; i++) {
+        if (pq[i].priority > highestPriority) {
+            highestPriority = pq[i].priority;
+            index = i;
+        }
+    }
+    return index;
+}
+
+void deleteHighestPriority() {
+    if (size == 0) {
+        printf("Priority Queue Underflow\n");
+        return;
+    }
+    int index = getHighestPriorityIndex();
+    printf("Deleted element %d with highest priority %d\n", pq[index].data, pq[index].priority);
+
+    for (int i = index; i < size - 1; i++) {
+        pq[i] = pq[i + 1];
+    }
+    size--;
+}
+
+void display() {
+    if (size == 0) {
+        printf("Priority Queue is empty\n");
+        return;
+    }
+    printf("Remaining Priority Queue elements (Data [Priority]):\n");
+    for (int i = 0; i < size; i++) {
+        printf("Data: %d, Priority: %d\n", pq[i].data, pq[i].priority);
+    }
+}
+
+int main() {
+    // 15. Insert 10 with priority 2[span_16](start_span)[span_16](end_span)
+    insert(10, 2);
+
+    // 16. Insert 20 with priority 1[span_17](start_span)[span_17](end_span)
+    insert(20, 1);
+
+    // 17. Insert 30 with priority 3[span_18](start_span)[span_18](end_span)
+    insert(30, 3);
+
+    // 18. Delete the element having the highest priority[span_19](start_span)[span_19](end_span)
+    deleteHighestPriority();
+
+    // 19. Display the remaining elements with their priorities[span_20](start_span)[span_20](end_span)
+    display();
+
+    return 0;
+}
